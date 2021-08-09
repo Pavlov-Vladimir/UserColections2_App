@@ -5,9 +5,7 @@ namespace Calender_App
 {
     class YearCollection
     {
-        Month[] months = new Month[12];
-
-        public int Count => months.Length;
+        private Month[] months = new Month[12];
 
         public Month this[int index]
         {
@@ -38,19 +36,19 @@ namespace Calender_App
 
         public void Add(Month month)
         {
-            months[month.Number] = month;
+            months[month.Number - 1] = month;
         }
 
         public void Clear()
         {
-            Month[] months = new Month[12];
+            months = new Month[12];
         }
 
         public bool Contains(Month month)
         {
             for (int i = 0; i < months.Length; i++)
             {
-                if (months[i].Equals(month))
+                if (months[i] != null && months[i].Equals(month))
                     return true;
             }
             return false;
@@ -60,7 +58,7 @@ namespace Calender_App
         {
             for (int i = 0; i < months.Length; i++)
             {
-                if (months[i].Days == days)
+                if (months[i]?.Days == days)
                     yield return months[i];
             }
         }
