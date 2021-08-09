@@ -6,8 +6,17 @@ namespace Calender_App
     {
         static void Main(string[] args)
         {
-            Month jan = new(Months.January);
-            Console.WriteLine(jan);
+            YearCollection year = new();
+            Month sep = new(Months.September);
+
+            Console.WriteLine(year.Contains(new(Months.September)));
+
+            Console.WriteLine(year[3]);
+
+            foreach (var month in year.GetMonthWithDaysNumber(30))
+            {
+                Console.WriteLine(month);
+            }
         }
     }
 }

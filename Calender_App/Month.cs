@@ -1,31 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Calender_App
+﻿namespace Calender_App
 {
     public enum Months
     {
         January = 1, February, March, April, May, June, July, August, September, October, November, December
     }
-
-    //public enum MonthDays
-    //{
-    //    January = 31,
-    //    February = 28,
-    //    March = 31,
-    //    April = 30,
-    //    May = 31,
-    //    June = 30,
-    //    July = 31,
-    //    August = 31,
-    //    September = 30,
-    //    October = 31,
-    //    November = 30,
-    //    December = 31
-    //}
 
     class Month
     {
@@ -57,7 +35,20 @@ namespace Calender_App
 
         public override string ToString()
         {
-            return $"Month: {Name} ({Number}), days in month: {Days}";
+            return $"Month {Number} is {Name}, \t days in month: {Days}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType())
+                return false;
+
+            return (this.Name == ((Month)obj).Name);
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
         }
     }
 }

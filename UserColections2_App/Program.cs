@@ -11,7 +11,7 @@ namespace UserColections2_App
             IEnumerable arr2 = GetSquareOfOdds(arr1);
             
 
-            foreach (var item in arr2)
+            foreach (var item in GetSquareOfOdds(arr1))
             {
                 Console.WriteLine(item); ;
             }
