@@ -33,18 +33,16 @@ namespace FamilyTree_App
 
         public void AddChild(Person person)
         {
+            Person[] people = new Person[_children.Length + 1];
+            for (int i = 0; i < _children.Length; i++)
             {
-                Person[] people = new Person[_children.Length + 1];
-                for (int i = 0; i < _children.Length; i++)
-                {
-                    if (_children[i] == person)  // Check for existing
-                        return;
-                    people[i] = _children[i];
-                }
-                people[^1] = person;
-                _children = people;
-                person.AddParent(this);
+                if (_children[i] == person)  // Check for existing
+                    return;
+                people[i] = _children[i];
             }
+            people[^1] = person;
+            _children = people;
+            person.AddParent(this);
         }
 
         public void GetParents()
