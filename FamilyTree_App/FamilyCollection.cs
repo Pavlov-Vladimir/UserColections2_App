@@ -8,6 +8,7 @@ namespace FamilyTree_App
 {
     class FamilyCollection
     {
+        private Person[] _family = new Person[0];
 
     }
 }

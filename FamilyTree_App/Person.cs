@@ -8,11 +8,29 @@ namespace FamilyTree_App
         public int YearOfBirth { get; set; }
         Person[] _parents = new Person[0];
         Person[] _children = new Person[0];
+        public Person Spouse { get; set; }
 
         public Person(string name, int yearOfBirth)
         {
             Name = name;
             YearOfBirth = yearOfBirth;
+        }
+
+        public void AddSpouse(Person person)
+        {
+            if (Spouse != null)
+                return;
+            Spouse = person;
+            person.AddSpouse(this);
+        }
+
+        public void RemoveSpouse()
+        {
+            if (Spouse == null)
+                return;
+            Person p = Spouse;
+            Spouse = null;
+            p.RemoveSpouse();
         }
 
         public void AddParent(Person person)
@@ -43,6 +61,14 @@ namespace FamilyTree_App
             people[^1] = person;
             _children = people;
             person.AddParent(this);
+        }
+
+        public void GetSpouse()
+        {
+            if (Spouse == null)
+                Console.WriteLine("has no spouse.");
+            else
+                Console.WriteLine(Spouse);
         }
 
         public void GetParents()
