@@ -21,6 +21,7 @@ namespace FamilyTree_App
             bob.AddSpouse(marina);
             pavlik.AddParent(petr);
             vlad.AddParent(marina);
+
             #region Tests for class Person
             //Console.WriteLine(bob);
             //Console.Write("Parents:\n");
@@ -61,21 +62,22 @@ namespace FamilyTree_App
             //Console.WriteLine(new string('-', 40)); 
             #endregion
 
+            #region Tests for FamilyCollection
             FamilyCollection<Person> family = new() { bob, vlad, katja, pavlik, tolik };
             family.Add(marina);
             family.Add(petr);
 
-            foreach (var item in family)
-            {
-                Console.WriteLine(item);
-                Console.WriteLine("Children:");
-                item.GetChildren();
-                Console.WriteLine("Parents:");
-                item.GetParents();
-                Console.WriteLine("Spouse:");
-                item.GetSpouse();
-                Console.WriteLine(new string('-', 35));
-            }
+            //foreach (var item in family)
+            //{
+            //    Console.WriteLine(item);
+            //    Console.WriteLine("Children:");
+            //    item.GetChildren();
+            //    Console.WriteLine("Parents:");
+            //    item.GetParents();
+            //    Console.WriteLine("Spouse:");
+            //    item.GetSpouse();
+            //    Console.WriteLine(new string('-', 35));
+            //}
 
             Console.WriteLine("Peter's heirs:");
             family.GetHeirs(petr);
@@ -84,6 +86,23 @@ namespace FamilyTree_App
             Console.WriteLine("Vlad's ancestors:");
             family.GetAncestors(vlad);
             Console.WriteLine(new string('-', 35));
+
+            family.GetPeopleBornAfter(2000);
+            Console.WriteLine(new string('-', 35));
+
+            foreach (var item in family)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine(new string('-', 35));
+
+            family.Remove(new("Bob", 1979));
+
+            foreach (var item in family)
+            {
+                Console.WriteLine(item);
+            } 
+            #endregion
         }
     }
 }

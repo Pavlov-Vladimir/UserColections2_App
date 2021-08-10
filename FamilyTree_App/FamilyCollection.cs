@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FamilyTree_App
 {
@@ -21,8 +18,11 @@ namespace FamilyTree_App
 
         public void Add(T person)
         {
-            T[] people = new T[_family.Length + 1];
-            for (int i = 0; i < _family.Length; i++)
+            if (Contains(person))
+                return;
+
+            T[] people = new T[Count + 1];
+            for (int i = 0; i < Count; i++)
                 people[i] = _family[i];
 
             people[^1] = person;
@@ -36,7 +36,7 @@ namespace FamilyTree_App
 
         public bool Contains(T person)
         {
-            for (int i = 0; i < _family.Length; i++)
+            for (int i = 0; i < Count; i++)
                 if (_family[i] == person)
                     return true;
             return false;
@@ -44,7 +44,7 @@ namespace FamilyTree_App
 
         public int IndexOf(T person)
         {
-            for (int i = 0; i < _family.Length; i++)
+            for (int i = 0; i < Count; i++)
                 if (_family[i] == person)
                     return i;
             return -1;
@@ -52,7 +52,7 @@ namespace FamilyTree_App
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            for (int i = 0; i < _family.Length; i++)
+            for (int i = 0; i < Count; i++)
                 array[arrayIndex++] = _family[i];
         }
 
@@ -72,17 +72,41 @@ namespace FamilyTree_App
                 Console.WriteLine($"{person.Name} is not exist in family.");
         }
 
+        public void GetPeopleBornAfter(int year)
+        {
+            foreach (T person in _family)
+                if (person.YearOfBirth > year)
+                    Console.WriteLine(person);
+        }
+
+        public void GetPeopleBornBefor(int year)
+        {
+            foreach (T person in _family)
+                if (person.YearOfBirth < year)
+                    Console.WriteLine(person);
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < _family.Length; i++)
+            for (int i = 0; i < Count; i++)
             {
                 yield return _family[i];
             }
         }
 
-        public bool Remove(T item)
+        public bool Remove(T person)
         {
-            throw new NotImplementedException();
+            if (Contains(person) == false)
+                return false;
+            T[] people = new T[Count - 1];
+            for (int i = 0, j = 0; i < Count; i++, j++)
+            {
+                if (_family[i] == person)
+                    i++;
+                people[j] = _family[i];
+            }
+            _family = people;
+            return true;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
