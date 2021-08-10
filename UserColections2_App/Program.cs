@@ -8,7 +8,7 @@ namespace UserColections2_App
         static void Main()
         {
             int[] arr1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            IEnumerable arr2 = GetSquareOfOdds(arr1);
+            //IEnumerable arr2 = GetSquareOfOdds(arr1);
             
 
             foreach (var item in GetSquareOfOdds(arr1))

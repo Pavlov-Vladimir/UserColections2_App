@@ -4,10 +4,10 @@ namespace Calender_App
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             YearCollection year = new();
-            Month sep = new(Months.September);
+            //Month sep = new(Months.September);
 
             Console.WriteLine(year.Contains(new(Months.September)));
 

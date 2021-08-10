@@ -6,8 +6,8 @@ namespace FamilyTree_App
     {
         public string Name { get; set; }
         public int YearOfBirth { get; set; }
-        Person[] _parents = new Person[0];
-        Person[] _children = new Person[0];
+        Person[] _parents = Array.Empty<Person>();
+        Person[] _children = Array.Empty<Person>();
         public Person Spouse { get; set; }
 
         public Person(string name, int yearOfBirth)
@@ -66,30 +66,57 @@ namespace FamilyTree_App
         public void GetSpouse()
         {
             if (Spouse == null)
-                Console.WriteLine("has no spouse.");
+                Console.WriteLine("  has no spouse.");
             else
-                Console.WriteLine(Spouse);
+                Console.WriteLine("  " + Spouse);
         }
 
         public void GetParents()
         {
             if (_parents.Length == 0)
-                Console.WriteLine("has no parents.");
+                Console.WriteLine("  has no parents.");
             else
             {
                 foreach (Person person in _parents)
-                    Console.WriteLine(person);
+                    Console.WriteLine("  " + person);
             }
         }
 
         public void GetChildren()
         {
             if (_children.Length == 0)
-                Console.WriteLine("has no children.");
-            else
             {
-                foreach (Person person in _children)
-                    Console.WriteLine(person);
+                Console.WriteLine("  has no children.");
+                return;
+            }
+            foreach (Person person in _children)
+                Console.WriteLine("  " + person);
+        }
+
+        private static int offset = 1;
+        public void GetHeirs()
+        {
+            if (_children.Length == 0)
+                return;
+            foreach (Person person in _children)
+            {
+                Console.Write(new string(' ', 3 * offset++));
+                Console.WriteLine(person);
+                person.GetHeirs();
+                offset--;
+            }
+        }
+
+        public void GetAncestors()
+        {
+            if (_parents.Length == 0)
+                return;
+            foreach (Person person in _parents)
+            {
+                Console.Write(new string(' ', 3 * offset++));
+                Console.WriteLine(person);
+                person.GetAncestors();
+                offset--;
             }
         }
 
