@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FamilyTree_App
 {
@@ -10,8 +6,8 @@ namespace FamilyTree_App
     {
         public string Name { get; set; }
         public int YearOfBirth { get; set; }
-        Person[] _parents = null;
-        Person[] _children = null;
+        Person[] _parents = new Person[0];
+        Person[] _children = new Person[0];
 
         public Person(string name, int yearOfBirth)
         {
@@ -21,43 +17,71 @@ namespace FamilyTree_App
 
         public void AddParent(Person person)
         {
-            if (_parents == null)
-                _parents = new Person[2] { person, null };
-            if (_parents[0] != null && _parents[1] != null)
-                throw new Exception("Too many parents...");
-
+            if (_parents.Length == 2 && _parents[0] != null && _parents[1] != null)
+                return;
+            Person[] people = new Person[_parents.Length + 1];
             for (int i = 0; i < _parents.Length; i++)
             {
-                if (_parents[i] == null)
-                {
-                    _parents[i] = person;
+                if (_parents[i] == person)  // Check for existing
                     return;
-                }
+                people[i] = _parents[i];
             }
+            people[^1] = person;
+            _parents = people;
+            person.AddChild(this);
         }
 
         public void AddChild(Person person)
         {
-            if (_children == null)
-                _children = new Person[] { person };
-            else
             {
                 Person[] people = new Person[_children.Length + 1];
                 for (int i = 0; i < _children.Length; i++)
+                {
+                    if (_children[i] == person)  // Check for existing
+                        return;
                     people[i] = _children[i];
+                }
                 people[^1] = person;
                 _children = people;
+                person.AddParent(this);
+            }
+        }
+
+        public void GetParents()
+        {
+            if (_parents.Length == 0)
+                Console.WriteLine("has no parents.");
+            else
+            {
+                foreach (Person person in _parents)
+                    Console.WriteLine(person);
+            }
+        }
+
+        public void GetChildren()
+        {
+            if (_children.Length == 0)
+                Console.WriteLine("has no children.");
+            else
+            {
+                foreach (Person person in _children)
+                    Console.WriteLine(person);
             }
         }
 
         public static bool operator ==(Person p1, Person p2)
         {
-            return (p1.Name == p2.Name && p1.YearOfBirth == p2.YearOfBirth);
+            return (p1?.Name == p2?.Name && p1?.YearOfBirth == p2?.YearOfBirth);
         }
 
         public static bool operator !=(Person p1, Person p2)
         {
-            return (p1.Name != p2.Name && p1.YearOfBirth != p2.YearOfBirth);
+            return (p1?.Name != p2?.Name && p1?.YearOfBirth != p2?.YearOfBirth);
+        }
+
+        public override string ToString()
+        {
+            return $"{Name}, born in {YearOfBirth}";
         }
 
         public override bool Equals(object obj)
